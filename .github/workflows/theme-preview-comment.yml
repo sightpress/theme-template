@@ -1,0 +1,17 @@
+# Keeps one comment on each pull request up to date with its theme preview: the download link, what the theme looks
+# like in words and the accessibility result. Runs after the Theme preview workflow and never runs the pull request's
+# code (see sightpress/theme-interface).
+name: Theme preview comment
+
+on:
+  workflow_run:
+    workflows: [Theme preview]
+    types: [completed]
+
+permissions:
+  actions: read
+  pull-requests: write
+
+jobs:
+  comment:
+    uses: sightpress/theme-interface/.github/workflows/theme-preview-comment.yml@0.2.1
