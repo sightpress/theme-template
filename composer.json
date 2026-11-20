@@ -1,0 +1,99 @@
+{
+  "name": "sightpress/theme-template",
+  "description": "A starting point for a SightPress theme: SightPress is a powerful CMS for everyone, designed with blind and low-vision creators and audiences in mind. Create your own theme from it with composer create-project, then make it yours.",
+  "type": "sightpress-theme",
+  "license": "GPL-3.0-or-later",
+  "keywords": [
+    "cms",
+    "accessibility",
+    "a11y",
+    "wcag",
+    "theme",
+    "sightpress-theme",
+    "template"
+  ],
+  "homepage": "https://github.com/sightpress/theme-template",
+  "support": {
+    "issues": "https://github.com/sightpress/theme-template/issues",
+    "source": "https://github.com/sightpress/theme-template"
+  },
+  "require": {
+    "php": ">=8.5",
+    "sightpress/theme-interface": "^0.2"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3",
+    "opis/json-schema": "^2",
+    "phpstan/extension-installer": "^1",
+    "phpstan/phpstan": "^2",
+    "phpstan/phpstan-phpunit": "^2",
+    "phpstan/phpstan-strict-rules": "^2",
+    "phpunit/phpunit": "^13",
+    "rector/rector": "^2",
+    "sightpress/core": "0.3.x-dev || ^0.4@dev"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Acme\\MyTheme\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Acme\\MyTheme\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-main": "0.1.x-dev"
+    },
+    "sightpress": {
+      "theme": "Acme\\MyTheme\\MyTheme"
+    }
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "phpstan/extension-installer": true
+    }
+  },
+  "scripts": {
+    "cs-check": "php-cs-fixer check --diff",
+    "cs-fix": "php-cs-fixer fix",
+    "phpstan": "phpstan analyse --no-progress",
+    "rector": "rector process",
+    "test": "phpunit",
+    "test:unit": "phpunit --testsuite unit",
+    "test:integration": "phpunit --testsuite integration",
+    "test:coverage": "@php tools/coverage-check.php",
+    "validate-theme": "@php vendor/bin/sightpress-theme theme:validate .",
+    "preview": "@php vendor/bin/sightpress-theme theme:preview .",
+    "check": [
+      "@composer validate --strict --no-check-lock",
+      "@cs-check",
+      "@phpstan",
+      "@test:coverage",
+      "@test:integration",
+      "@validate-theme"
+    ],
+    "fix": [
+      "@rector",
+      "@cs-fix"
+    ]
+  },
+  "scripts-descriptions": {
+    "cs-check": "Check the code style (PSR-12) without changing files.",
+    "cs-fix": "Fix the code style (PSR-12).",
+    "phpstan": "Run static analysis (PHPStan, level max).",
+    "rector": "Apply automated refactorings (PHP 8.5 set).",
+    "test": "Run the unit and integration test suites.",
+    "test:unit": "Run the unit test suite.",
+    "test:integration": "Run the integration test suite.",
+    "test:coverage": "Run the unit suite with coverage; fail below 100% lines or methods or on any coverage ignore annotation.",
+    "validate-theme": "Check the theme's contrast in every colour mode and its base font size.",
+    "preview": "Write the theme's preview page to build/theme-preview/<id>/ (add -- --screenshot for the screenshots).",
+    "check": "Run every check that must pass before a commit.",
+    "fix": "Apply Rector refactorings, then fix the code style."
+  }
+}

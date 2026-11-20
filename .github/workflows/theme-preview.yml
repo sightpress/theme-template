@@ -1,0 +1,13 @@
+# The theme's preview on every pull request: one artifact with the static preview page, its screenshots and the axe
+# report, so a reviewer can see a change without installing anything (see sightpress/theme-interface).
+name: Theme preview
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  preview:
+    uses: sightpress/theme-interface/.github/workflows/theme-preview.yml@0.2.1

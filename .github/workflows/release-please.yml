@@ -1,0 +1,102 @@
+# Keeps a release pull request open from the conventional commits on main. Merging it tags the release, updates
+# CHANGELOG.md, and attaches the theme's preview (a zip that opens offline) and its screenshots to the GitHub release,
+# for the README and the docs. Screenshots are never committed.
+name: Release Please
+
+on:
+  push:
+    branches: [main]
+  # Attach the preview and screenshots to an existing release again.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: The release tag, for example 0.1.0
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - uses: googleapis/release-please-action@v5
+        id: release
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  packagist:
+    name: update Packagist
+    needs: release-please
+    runs-on: ubuntu-latest
+    steps:
+      # Tells Packagist about every push to main and any tag just created, with the PACKAGIST_USERNAME and
+      # PACKAGIST_API_TOKEN secrets (a Packagist "safe" token can only trigger updates). Without them it does nothing:
+      # Packagist's GitHub hook can do the same.
+      - name: Update Packagist
+        env:
+          PACKAGIST_USERNAME: ${{ secrets.PACKAGIST_USERNAME }}
+          PACKAGIST_API_TOKEN: ${{ secrets.PACKAGIST_API_TOKEN }}
+        run: |
+          if [ -z "$PACKAGIST_API_TOKEN" ]; then
+            echo "No PACKAGIST_API_TOKEN secret: Packagist is not told about this push."
+            exit 0
+          fi
+          curl --fail-with-body --silent --show-error --retry 3 \
+            --request POST \
+            --header 'Content-Type: application/json' \
+            --data '{"repository":{"url":"https://github.com/${{ github.repository }}"}}' \
+            "https://packagist.org/api/update-package?username=${PACKAGIST_USERNAME}&apiToken=${PACKAGIST_API_TOKEN}"
+
+  assets:
+    name: preview and screenshots on the release
+    needs: release-please
+    if: ${{ !cancelled() && (needs.release-please.outputs.release_created == 'true' || github.event_name == 'workflow_dispatch') }}
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ needs.release-please.outputs.tag_name || inputs.tag }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.TAG }}
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.5'
+          extensions: gd, intl, sodium, exif, fileinfo, pdo_sqlite
+          coverage: none
+          tools: composer:v2
+
+      - name: Install the theme with core as a dev dependency
+        run: composer update --no-interaction --no-progress --prefer-dist
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      - name: Install Playwright's Chromium (tooling only)
+        run: |
+          mkdir -p build/tools && cd build/tools
+          npm init -y > /dev/null
+          npm install --no-audit --no-fund playwright@1
+          npx playwright install --with-deps chromium
+
+      - name: Build the preview and its screenshots
+        env:
+          NODE_PATH: ${{ github.workspace }}/build/tools/node_modules
+        run: vendor/bin/sightpress-theme theme:preview . --out=build/theme-preview/theme --screenshot
+
+      - name: Attach them to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd build/theme-preview
+          cp theme/screenshot.png theme/screenshot-dark.png theme/page.png .
+          zip -qr "${GITHUB_REPOSITORY#*/}-$TAG-preview.zip" theme
+          gh release upload "$TAG" screenshot.png screenshot-dark.png page.png "${GITHUB_REPOSITORY#*/}-$TAG-preview.zip" --clobber
