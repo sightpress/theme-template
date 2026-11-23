@@ -20,7 +20,7 @@ final class MyTheme implements ThemeInterface
     public const string ID = 'my-theme';
 
     /** The theme's version; keep it equal to "version" in theme.json (release-please does it for you). */
-    public const string VERSION = '0.1.0'; // x-release-please-version
+    public const string VERSION = '0.1.1'; // x-release-please-version
 
     public function manifest(): ThemeManifest
     {

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/sightpress/theme-template/compare/0.1.0...0.1.1) (2026-11-23)
+
+
+### Bug fixes
+
+* ship the tests and tooling a new theme needs with composer create-project ([#3](https://github.com/sightpress/theme-template/issues/3)) ([231c4c8](https://github.com/sightpress/theme-template/commit/231c4c888ed390cf172e98482a15dcf67429c33c))
+
 ## 0.1.0 (2026-11-23)
 
 
