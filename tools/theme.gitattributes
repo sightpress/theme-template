@@ -1,0 +1,13 @@
+# Your theme's package ships theme.json, templates/, assets/, translations/ and src/. Tests, tooling and anything the
+# preview builds (build/: the static preview and its screenshots) never ship.
+/.github export-ignore
+/build export-ignore
+/tests export-ignore
+/tools export-ignore
+/.editorconfig export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.php-cs-fixer.dist.php export-ignore
+/phpstan.dist.neon export-ignore
+/phpunit.xml.dist export-ignore
+/rector.php export-ignore

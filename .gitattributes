@@ -1,15 +1,8 @@
-# The theme package ships theme.json, templates/, assets/, translations/ and src/. Tests, tooling and anything the
-# preview builds (build/: the static preview and its screenshots) never ship.
-/.github export-ignore
-/build export-ignore
-/tests export-ignore
-/tools export-ignore
-/.editorconfig export-ignore
-/.gitattributes export-ignore
-/.gitignore export-ignore
-/.php-cs-fixer.dist.php export-ignore
+# composer create-project installs this repository's package, so it must keep the tests and tooling a new theme needs.
+# Only what runs this repository's own releases stays out. A new theme gets tools/theme.gitattributes as its
+# .gitattributes (see post-create-project-cmd in composer.json), so the theme's own package ships no tooling.
+/.github/rulesets export-ignore
+/.github/workflows/release-please.yml export-ignore
 /.release-please-manifest.json export-ignore
-/phpstan.dist.neon export-ignore
-/phpunit.xml.dist export-ignore
-/rector.php export-ignore
+/build export-ignore
 /release-please-config.json export-ignore

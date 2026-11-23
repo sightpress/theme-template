@@ -59,6 +59,7 @@
     }
   },
   "scripts": {
+    "post-create-project-cmd": "@php -r \"rename('tools/theme.gitattributes', '.gitattributes');\"",
     "cs-check": "php-cs-fixer check --diff",
     "cs-fix": "php-cs-fixer fix",
     "phpstan": "phpstan analyse --no-progress",

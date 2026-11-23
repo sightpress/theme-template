@@ -20,6 +20,10 @@ cd my-theme
 composer check
 ```
 
+If you used **Use this template**, run `mv tools/theme.gitattributes .gitattributes` and delete
+`release-please-config.json`, `.release-please-manifest.json`, `.github/workflows/release-please.yml` and
+`.github/rulesets/`, unless you want them. `composer create-project` does this for you.
+
 `composer check` runs the code style, static analysis, the tests (with a 100% coverage gate) and `theme:validate`, the
 checks SightPress runs before it applies a theme.
 
@@ -53,7 +57,7 @@ every theme: a top bar, a band with your theme's name and a Download button, one
 refused.
 
 Every pull request gets the same preview as a download, and a comment with the accessibility result. The two
-`theme-preview` workflows in `.github/workflows/` do it, and a release gets the screenshots attached.
+`theme-preview` workflows in `.github/workflows/` do it.
 
 ## Install it in a project
 
