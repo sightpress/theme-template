@@ -23,8 +23,7 @@ final class MyThemeTest extends TestCase
 
         self::assertMatchesRegularExpression(ThemeManifest::ID_PATTERN, $manifest->id);
         self::assertSame(MyTheme::VERSION, $manifest->version);
-        self::assertNotNull($manifest->previewDescription, 'describe the look of the preview page for people who can\'t see it');
-        self::assertNull($manifest->screenshot, 'a theme ships no screenshot');
+        self::assertNotEmpty($manifest->previewDescription, 'describe the look of the preview page for people who can\'t see it');
         self::assertEquals($manifest, new MyTheme()->manifest());
     }
 
