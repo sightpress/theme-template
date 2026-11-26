@@ -29,7 +29,7 @@ final class MyTheme implements ThemeInterface
             name: 'My theme',
             description: 'Describe your theme in one or two sentences, for the theme picker.',
             version: self::VERSION,
-            requires: new ThemeRequirement('^0.2'),
+            requires: new ThemeRequirement('^0.2 || ^0.3'),
             layouts: LayoutDefinition::required(),
             rightToLeft: true,
             author: 'Your name or organisation',
