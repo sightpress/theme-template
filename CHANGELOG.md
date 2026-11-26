@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/sightpress/theme-template/compare/0.1.1...0.1.2) (2026-11-26)
+
+
+### Bug fixes
+
+* accept theme-interface 0.3 as well as 0.2 (BL-2) ([#5](https://github.com/sightpress/theme-template/issues/5)) ([ebf4a68](https://github.com/sightpress/theme-template/commit/ebf4a6894b633adc29f0c66eaf7a8cb9b6182798))
+
 ## [0.1.1](https://github.com/sightpress/theme-template/compare/0.1.0...0.1.1) (2026-11-23)
 
 
