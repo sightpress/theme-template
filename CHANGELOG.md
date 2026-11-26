@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/sightpress/theme-template/compare/0.1.2...0.1.3) (2026-11-26)
+
+
+### Bug fixes
+
+* make the manifest test pass on theme-interface 0.3, which has no screenshot ([#7](https://github.com/sightpress/theme-template/issues/7)) ([981d942](https://github.com/sightpress/theme-template/commit/981d942524ddec56e1d3db90391511d4c01721d2))
+
 ## [0.1.2](https://github.com/sightpress/theme-template/compare/0.1.1...0.1.2) (2026-11-26)
 
 
