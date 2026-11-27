@@ -30,7 +30,7 @@
     "phpstan/phpstan-strict-rules": "^2",
     "phpunit/phpunit": "^13",
     "rector/rector": "^2",
-    "sightpress/core": "0.3.x-dev || ^0.4@dev"
+    "sightpress/core": "^0.4@dev || ^0.5@dev"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
